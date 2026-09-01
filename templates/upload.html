@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Study Material</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #eef2ff;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background circles */
+        .circle1,
+        .circle2,
+        .circle3 {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.08);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle1 {
+            width: 350px;
+            height: 350px;
+            left: -120px;
+            top: -80px;
+        }
+
+        .circle2 {
+            width: 250px;
+            height: 250px;
+            right: -80px;
+            bottom: -60px;
+        }
+
+        .circle3 {
+            width: 160px;
+            height: 160px;
+            left: 35%;
+            bottom: -70px;
+            background-color: rgba(30, 41, 59, 0.06);
+        }
+
+        /* Main upload box */
+        .upload-box {
+            width: 90%;
+            max-width: 650px;
+            margin: 70px auto;
+            background-color: white;
+            padding: 45px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 35px rgba(30, 41, 59, 0.15);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-box h1 {
+            color: #1e293b;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 34px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .upload-box .intro {
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* File area */
+        .file-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 25px;
+            background-color: #f8fafc;
+        }
+
+        .file-box p {
+            color: #475569;
+            margin: 0 0 15px;
+        }
+
+        .file-box input {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .accepted {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 12px !important;
+        }
+
+        /* Material title */
+        label {
+            display: block;
+            text-align: left;
+            color: #334155;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .material-name {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            margin-bottom: 25px;
+        }
+
+        .material-name:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        /* Button */
+        .summary-btn {
+            padding: 13px 30px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .summary-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            body {
+                overflow: auto;
+            }
+
+            .upload-box {
+                width: 90%;
+                margin: 40px auto;
+                padding: 30px;
+            }
+
+            .upload-box h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <!-- Background circles -->
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+
+    <!-- Upload section -->
+    <div class="upload-box">
+
+        <h1>Upload Your Study Material</h1>
+
+        <p class="intro">
+            Upload your notes, lecture material, or document
+            and let your AI study assistant help you understand it.
+        </p>
+
+        <form method="post" enctype="multipart/form-data">
+
+    <div class="file-box">
+
+        <p>Choose your study material</p>
+
+        <input
+            type="file"
+            name="study_file"
+            accept=".pdf"
+            required
+        >
+
+        <p class="accepted">
+            Accepted files: PDF only
+        </p>
+
+    </div>
+
+    <label for="material-name">
+        What is this material about?
+    </label>
+
+    <input
+        type="text"
+        id="material-name"
+        name="material_name"
+        class="material-name"
+        placeholder="Example: Computer Networks - Chapter 1"
+    >
+
+    <button
+        type="submit"
+        class="summary-btn">
+        Generate Summary
+    </button>
+
+    <button
+        type="submit"
+        formaction="/quiz"
+        class="summary-btn">
+        Generate Quiz
+    </button>
+
+    </form>
+    </div>
+
+</body>
+</html>

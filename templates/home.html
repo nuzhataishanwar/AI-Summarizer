@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Study Assistant</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #eef2ff;
+            color: #1e293b;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        }
+
+        /* Main blue section */
+        .mydiv {
+            width: 90%;
+            max-width: 1550px;
+            min-height: 300px;
+            margin: 80px auto 60px;
+            background-color: #1e293b;
+            padding: 40px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 25px;
+            font-family: Poppins, sans-serif;
+            text-align: center;
+            font-size: 48px;
+        }
+
+        .front {
+            color: white;
+            font-size: 17px;
+            line-height: 1.7;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        }
+
+        /* Generate Summary button */
+        .summary-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 32px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background-color: #2563eb;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .summary-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* Content below hero */
+        .content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .text {
+            flex: 1;
+        }
+
+        .text h2 {
+            color: #1e293b;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-family: Poppins, Arial, sans-serif;
+        }
+
+        .text p {
+            color: #475569;
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .text strong {
+            color: #2563eb;
+        }
+
+        /* Image placeholder */
+        .image-box {
+            flex: 1;
+            height: 280px;
+           
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .quiz-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .quiz-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Quiz feature cards */
+        .features {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .features h2 {
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 34px;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .features-intro {
+            color: #64748b;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px 25px;
+            border-radius: 14px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.08);
+        }
+
+        .card h3 {
+            color: #1e293b;
+            font-size: 21px;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <!-- Hero Section -->
+    <div class="mydiv">
+        <h1>Free Online AI Study Assistant</h1>
+
+        <p class="front">
+            Upload your study materials and let your AI study assistant
+            summarize your work, generate interactive quizzes, and help you
+            <br>
+            <strong>learn more effectively from your own content.</strong>
+        </p>
+
+        <a href="/upload" class="summary-btn">
+            Generate Summary 
+        </a>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="content">
+
+        <!-- Summary Section -->
+        <div class="section">
+
+            <div class="text">
+                <h2>Turn Your Notes Into Clear Summaries</h2>
+
+                <p>
+                    Have a long document, lecture notes, or study material?
+                    Simply upload your file and let your AI study assistant
+                    turn it into a clear and easy-to-understand summary.
+                    Spend less time reading through pages and more time
+                    focusing on what actually matters.
+                </p>
+            </div>
+
+            <div class="image-box">
+                
+                <img src="{{ url_for('static', filename='summary.png') }}">
+
+            </div>
+
+        </div>
+
+
+        <!-- Quiz Section -->
+        <div class="section reverse">
+
+            <div class="text">
+                <h2>Create Your Own Quiz</h2>
+
+                <p>
+                    Turn your study material into an interactive quiz and
+                    test how much you really understand. Choose from different
+                    types of questions and practice directly from the content
+                    you uploaded.
+                    <br><br>
+
+                    Ready to test yourself?
+                    <a href="/quiz" class="quiz-link">
+                        Create your own quiz →
+                    </a>
+                </p>
+            </div>
+
+            <div class="image-box">
+                <img src="{{ url_for('static', filename='quiz.png') }}">
+            </div>
+
+        </div>
+
+
+        <!-- Features -->
+        <div class="features">
+
+            <h2>Everything You Need to Study Smarter</h2>
+
+            <p class="features-intro">
+                One simple place to understand, practice, and review your
+                study materials.
+            </p>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>📄 Upload Your Work</h3>
+                    <p>
+                        Upload your notes, documents, or study materials
+                        and let the assistant work directly with your content.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>✨ Smart Summaries</h3>
+                    <p>
+                        Quickly understand long materials with organized,
+                        easy-to-read summaries that highlight important ideas.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🧠 Interactive Quizzes</h3>
+                    <p>
+                        Generate quizzes from your uploaded material and
+                        challenge yourself with different question types.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background-color: #eef2ff;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background circles */
+
+        .circle1,
+        .circle2,
+        .circle3 {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.08);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle1 {
+            width: 350px;
+            height: 350px;
+            left: -120px;
+            top: -80px;
+        }
+
+        .circle2 {
+            width: 250px;
+            height: 250px;
+            right: -80px;
+            bottom: -60px;
+        }
+
+        .circle3 {
+            width: 160px;
+            height: 160px;
+            left: 35%;
+            bottom: -70px;
+            background-color: rgba(30, 41, 59, 0.06);
+        }
+
+
+        /* Main heading */
+
+        h1 {
+            font-size: 48px;
+            text-align: center;
+            color: #1e3a8a;
+            margin: 45px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* Profile section */
+
+        .profile {
+            width: 70%;
+            max-width: 750px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile h2 {
+            color: #1e3a8a;
+            margin-top: 0;
+        }
+
+        .profile p {
+            color: #334155;
+            font-size: 20px;
+            text-align: left;
+        }
+
+
+        /* Buttons */
+
+        .button {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .button button {
+            padding: 12px 20px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        .button button:hover {
+            background-color: #1d4ed8;
+        }
+
+
+        /* Activity heading */
+
+        .activity-title {
+            text-align: center;
+            color: #1e3a8a;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* Statistics */
+
+        .mydiv {
+            width: 70%;
+            max-width: 800px;
+            margin: 20px auto 50px;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            background-color: white;
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        .stat h2 {
+            color: #2563eb;
+            font-size: 32px;
+            margin: 5px;
+        }
+
+        .stat p {
+            color: #475569;
+            font-size: 16px;
+            text-align: center;
+        }
+
+
+        /* History */
+
+        .history {
+            width: 70%;
+            max-width: 800px;
+            margin: 20px auto 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .history-title {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .history-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+            margin-bottom: 30px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .material-name {
+            color: #1e293b;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .material-info {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .view-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .view-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        .quiz-score {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+
+        /* View all history */
+
+        .all-history {
+            text-align: center;
+            margin: 25px 0 50px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+
+            .profile,
+            .history {
+                width: 90%;
+            }
+
+            .mydiv {
+                width: 90%;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .history-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Background circles -->
+
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+
+
+    {% include 'navbar.html' %}
+
+
+    <!-- Dashboard heading -->
+
+    <h1>Dashboard</h1>
+
+
+    <!-- Profile section -->
+
+    <div class="profile">
+
+        <h2>Your Profile</h2>
+
+        <p>User name: {{username}}</p>
+
+        <p>Email: {{email}}</p>
+        <div class="button">
+
+            <button>
+                Update Profile
+            </button>
+
+            <button>
+                Change Password
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Activity section -->
+
+    <h2 class="activity-title">
+        Your Activity
+    </h2>
+
+
+    <div class="mydiv">
+
+        <div class="stat">
+
+            <h2>0</h2>
+
+            <p>
+                Files Uploaded
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h2>0</h2>
+
+            <p>
+                Summaries Generated
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <h2>0</h2>
+
+            <p>
+                Quizzes Generated
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recent Study Materials -->
+
+    <div class="history">
+
+        <h2 class="history-title">
+             Recent Study Materials
+        </h2>
+
+        <div class="history-box">
+
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="material-name">
+                        Computer Networks - Chapter 1
+                    </div>
+
+                    <div class="material-info">
+                        PDF • Today
+                    </div>
+
+                </div>
+
+                <a href="/summary" class="view-link">
+                    View Summary
+                </a>
+
+            </div>
+
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="material-name">
+                        OOP Inheritance
+                    </div>
+
+                    <div class="material-info">
+                        PDF • Yesterday
+                    </div>
+
+                </div>
+
+                <a href="/summary" class="view-link">
+                    View Summary
+                </a>
+
+            </div>
+
+
+            <div class="history-item">
+
+                <div>
+
+                    <div class="material-name">
+                        Probability Notes
+                    </div>
+
+                    <div class="material-info">
+                        DOCX • 3 days ago
+                    </div>
+
+                </div>
+
+                <a href="/summary" class="view-link">
+                    View Summary
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Recent Quizzes -->
+
+        <h2 class="history-title">
+             Recent Quizzes
+        </h2>
+
+
+        <div class="history-box">
+
+
+            <div class="history-item">
+
+                <div class="material-name">
+                    Computer Networks Quiz
+                </div>
+
+                <div class="quiz-score">
+                    8 / 10
+                </div>
+
+            </div>
+
+
+            <div class="history-item">
+
+                <div class="material-name">
+                    OOP Quiz
+                </div>
+
+                <div class="quiz-score">
+                    7 / 10
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Decorative text only -->
+
+        <div class="all-history">
+            View All History →
+        </div>
+
+
+    </div>
+
+</body>
+</html>

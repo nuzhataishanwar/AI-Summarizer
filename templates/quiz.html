@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Quiz</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background-color: #eef2ff;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .circle1,
+        .circle2,
+        .circle3 {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.08);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle1 {
+            width: 350px;
+            height: 350px;
+            left: -120px;
+            top: -80px;
+        }
+
+        .circle2 {
+            width: 250px;
+            height: 250px;
+            right: -80px;
+            bottom: -60px;
+        }
+
+        .circle3 {
+            width: 160px;
+            height: 160px;
+            left: 35%;
+            bottom: -70px;
+            background-color: rgba(30, 41, 59, 0.06);
+        }
+
+        .container {
+            width: 70%;
+            max-width: 800px;
+            margin: 45px auto 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 42px;
+            text-align: center;
+            color: #1e3a8a;
+            margin: 45px 0 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #475569;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .quiz-header {
+            background-color: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        .quiz-header h2 {
+            color: #1e3a8a;
+            margin: 0;
+        }
+
+        .question-card {
+            background-color: white;
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: block;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #334155;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background-color: #eef2ff;
+            border-color: #2563eb;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .submit {
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        .result-box {
+            background-color: white;
+            margin-top: 30px;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        .result-box h2 {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            color: #2563eb;
+            font-size: 42px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
+        .result-message {
+            color: #475569;
+            font-size: 18px;
+        }
+
+        .correct-answer {
+            text-align: left;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #eef2ff;
+            border-radius: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .result-box {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+
+
+    <div class="container">
+
+        <h1>Your Quiz</h1>
+
+        <p class="subtitle">
+            Test your understanding of your study material
+        </p>
+
+
+        <div class="quiz-header">
+            <h2>Quiz</h2>
+        </div>
+
+
+        <div id="quizArea"></div>
+
+
+        <div id="resultBox" class="result-box hidden"></div>
+
+    </div>
+
+
+    <script>
+
+        const quizText = {{ quiz|default("")|tojson }};
+
+
+        /*
+         * Separate questions from answers
+         */
+
+        let parts = quizText.split("Answers:");
+
+        let questionText = parts[0];
+        let answerText = parts[1] || "";
+
+
+        let questions = [];
+        let answers = [];
+
+
+        /*
+         * Get questions
+         */
+
+        let lines = questionText.split("\n");
+
+        let question = null;
+
+
+        lines.forEach(function(line) {
+
+            line = line.trim();
+
+
+            /*
+             * Question format:
+             * 1. Question text
+             * 2. Question text
+             */
+
+            if (/^\d+\./.test(line)) {
+
+                if (question) {
+                    questions.push(question);
+                }
+
+                question = {
+                    text: line.replace(/^\d+\.\s*/, ""),
+                    options: []
+                };
+
+            }
+
+
+            /*
+             * Option format:
+             * a) Option
+             * b) Option
+             * c) Option
+             * d) Option
+             */
+
+            else if (/^[a-d]\)/i.test(line)) {
+
+                if (question) {
+
+                    question.options.push(
+                        line.substring(2).trim()
+                    );
+
+                }
+
+            }
+
+        });
+
+
+        /*
+         * Add last question
+         */
+
+        if (question) {
+            questions.push(question);
+        }
+
+
+        /*
+         * Get correct answers
+         */
+
+        let answerLines = answerText.split("\n");
+
+
+        answerLines.forEach(function(line) {
+
+            let match = line.match(
+                /^\s*\d+\.\s*([a-d])/i
+            );
+
+
+            if (match) {
+
+                answers.push(
+                    match[1].toLowerCase()
+                );
+
+            }
+
+        });
+
+
+        /*
+         * Show quiz
+         */
+
+        function showQuiz() {
+
+            let html = "";
+
+
+            questions.forEach(function(q, i) {
+
+                html += `
+                    <div class="question-card">
+
+                        <div class="question">
+                            ${i + 1}. ${q.text}
+                        </div>
+                `;
+
+
+                q.options.forEach(function(option, j) {
+
+                    let letter =
+                        String.fromCharCode(97 + j);
+
+
+                    html += `
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="question${i}"
+                                value="${letter}"
+                            >
+
+                            ${letter}) ${option}
+
+                        </label>
+                    `;
+
+                });
+
+
+                html += `
+                    </div>
+                `;
+
+            });
+
+
+            /*
+             * Submit button
+             */
+
+            html += `
+                <button
+                    class="submit"
+                    onclick="submitQuiz()"
+                >
+                    Submit Quiz
+                </button>
+            `;
+
+
+            document.getElementById("quizArea").innerHTML = html;
+
+        }
+
+
+        /*
+         * Check answers
+         */
+
+        function submitQuiz() {
+
+            let score = 0;
+
+
+            for (let i = 0; i < questions.length; i++) {
+
+                let selected =
+                    document.querySelector(
+                        'input[name="question' + i + '"]:checked'
+                    );
+
+
+                if (
+                    selected &&
+                    selected.value === answers[i]
+                ) {
+
+                    score++;
+
+                }
+
+            }
+
+
+            /*
+             * Result box
+             *
+             * IMPORTANT:
+             * No total marks are displayed.
+             */
+
+            let html = `
+                <h2>Quiz Completed!</h2>
+
+                <div class="score">
+                    ${score}
+                </div>
+
+                <p class="result-message">
+                    You answered ${score} questions correctly.
+                </p>
+
+                <h3>Correct Answers</h3>
+            `;
+
+
+            /*
+             * Show correct answers
+             */
+
+            for (let i = 0; i < questions.length; i++) {
+
+                let answer = answers[i];
+
+
+                if (!answer) {
+                    continue;
+                }
+
+
+                let index =
+                    answer.charCodeAt(0) - 97;
+
+
+                let correctText =
+                    questions[i].options[index];
+
+
+                html += `
+                    <div class="correct-answer">
+
+                        <strong>
+                            Question ${i + 1}
+                        </strong>
+
+                        <br><br>
+
+                        Correct answer:
+                        ${answer.toUpperCase()}) ${correctText}
+
+                    </div>
+                `;
+
+            }
+
+
+            /*
+             * Display result
+             */
+
+            document.getElementById("resultBox").innerHTML = html;
+
+
+            document.getElementById("resultBox")
+                .classList.remove("hidden");
+
+
+            /*
+             * Hide quiz after submission
+             */
+
+            document.getElementById("quizArea")
+                .style.display = "none";
+
+        }
+
+
+        /*
+         * Start quiz
+         */
+
+        showQuiz();
+
+    </script>
+
+</body>
+</html>

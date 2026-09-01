@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Study Assistant - Signup</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            background-color: #eef2ff;
+        }
+
+        /* Main page */
+        .signup-page {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background decoration */
+        .circle1,
+        .circle2,
+        .circle3 {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.08);
+        }
+
+        .circle1 {
+            width: 350px;
+            height: 350px;
+            left: -120px;
+            top: -80px;
+        }
+
+        .circle2 {
+            width: 250px;
+            height: 250px;
+            right: -80px;
+            bottom: -60px;
+        }
+
+        .circle3 {
+            width: 160px;
+            height: 160px;
+            left: 35%;
+            bottom: -70px;
+            background-color: rgba(30, 41, 59, 0.06);
+        }
+
+        /* Main box */
+        .container {
+            width: 90%;
+            max-width: 950px;
+            min-height: 560px;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 10px 35px rgba(30, 41, 59, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* LEFT SIDE */
+
+        .welcome {
+            width: 50%;
+            background-color: #1e293b;
+            padding: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Large picture/card */
+        .picture {
+            width: 100%;
+            height: 550px;
+            background: linear-gradient(
+                145deg,
+                #2563eb,
+                #2b4691,
+                #1e3a8a
+            );
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Decorative circles inside picture */
+
+        .picture-circle1 {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.08);
+            top: -70px;
+            right: -60px;
+        }
+
+        .picture-circle2 {
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.07);
+            bottom: -50px;
+            left: -50px;
+        }
+
+        /* Welcome text */
+        .welcome h1 {
+            position: relative;
+            z-index: 2;
+
+            color: white;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 48px;
+            margin: 0 0 35px;
+            letter-spacing: 1px;
+        }
+
+        /* Illustration */
+        .book-stack {
+            position: relative;
+            z-index: 2;
+            width: 210px;
+            height: 170px;
+        }
+
+        .book {
+            position: absolute;
+            width: 190px;
+            height: 45px;
+            border-radius: 7px;
+            left: 10px;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.18);
+        }
+
+        .book1 {
+            background-color: white;
+            bottom: 10px;
+            transform: rotate(-4deg);
+        }
+
+        .book2 {
+            background-color: #bfdbfe;
+            bottom: 52px;
+            left: 20px;
+            transform: rotate(3deg);
+        }
+
+        .book3 {
+            background-color: #dbeafe;
+            bottom: 94px;
+            left: 5px;
+            transform: rotate(-3deg);
+        }
+
+        /* Laptop */
+        .laptop {
+            position: absolute;
+            z-index: 3;
+            width: 115px;
+            height: 75px;
+            background-color: #f8fafc;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid #334155;
+        }
+
+        .screen {
+    width: 100%;
+    height: 100%;
+    background-color: #bfdbfe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #1d4ed8;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: 1px;
+}
+
+        .laptop-base {
+            position: absolute;
+            width: 145px;
+            height: 9px;
+            background-color: #334155;
+            bottom: 51px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Floating decorations */
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 28px;
+            z-index: 2;
+        }
+
+        .star1 {
+            top: 90px;
+            left: 45px;
+        }
+
+        .star2 {
+            top: 145px;
+            right: 45px;
+            font-size: 20px;
+        }
+
+        .star3 {
+            bottom: 100px;
+            right: 45px;
+            font-size: 25px;
+        }
+
+
+        /* RIGHT SIDE */
+
+        .signup-section {
+            width: 50%;
+            padding: 45px 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .signup-section h1 {
+            color: #1e293b;
+            font-size: 32px;
+            margin: 0 0 8px;
+            font-family: Poppins, Arial, sans-serif;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0 0 25px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            color: #1e293b;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background-color: white;
+            color: #334155;
+            font-size: 14px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        /* First + Last name in one line */
+
+        .name-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .name-field {
+            width: 50%;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background-color: #2563eb;
+            color: white;
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 18px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .login-text a {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-text a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+
+            .signup-page {
+                padding: 30px 0;
+            }
+
+            .container {
+                flex-direction: column;
+                width: 92%;
+            }
+
+            .welcome,
+            .signup-section {
+                width: 100%;
+            }
+
+            .welcome {
+                padding: 25px;
+            }
+
+            .picture {
+                height: 350px;
+            }
+
+            .welcome h1 {
+                font-size: 38px;
+            }
+
+            .signup-section {
+                padding: 40px 30px;
+            }
+
+            .name-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .name-field {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="signup-page">
+
+        <!-- Background decoration -->
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+
+
+        <div class="container">
+
+            <!-- LEFT: Decorative picture -->
+            <div class="welcome">
+
+                <div class="picture">
+
+                    <div class="picture-circle1"></div>
+                    <div class="picture-circle2"></div>
+
+                    <div class="star star1">✦</div>
+                    <div class="star star2">✦</div>
+                    <div class="star star3">✦</div>
+
+                    <h1>Welcome</h1>
+
+                    <div class="book-stack">
+
+                        <div class="book book3"></div>
+                        <div class="book book2"></div>
+                        <div class="book book1"></div>
+
+                    </div>
+
+                    <div class="laptop">
+                        <div class="screen">
+                            Sign Up
+                        </div>
+                    </div>
+
+                    <div class="laptop-base"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT: Signup form -->
+            <div class="signup-section">
+
+                <h1>Create Account</h1>
+
+                <p class="subtitle">
+                    Sign up to start studying smarter.
+                </p>
+
+                <form action="/signup" method="post">
+
+                    <!-- First and Last Name -->
+                    <div class="name-row">
+
+                        <div class="name-field">
+
+                            <label for="fname">First Name</label>
+
+                            <input
+                                type="text"
+                                id="fname"
+                                name="fname"
+                                placeholder="First name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="name-field">
+
+                            <label for="lname">Last Name</label>
+
+                            <input
+                                type="text"
+                                id="lname"
+                                name="lname"
+                                placeholder="Last name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Username -->
+                    <div class="field">
+
+                        <label for="uname">User Name</label>
+
+                        <input
+                            type="text"
+                            id="uname"
+                            name="uname"
+                            placeholder="Choose a username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="field">
+
+                        <label for="email">E-Mail</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="field">
+
+                        <label for="pass">Password</label>
+
+                        <input
+                            type="password"
+                            id="pass"
+                            name="pass"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Language -->
+                    <div class="field">
+
+                        <label for="lang">Language</label>
+
+                        <select id="lang" name="lang">
+
+                            <option value="English">English</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Hindi">Hindi</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button type="submit">
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="login-text">
+                    Already have an account?
+                    <a href="/">Login</a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
